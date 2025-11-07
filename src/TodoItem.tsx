@@ -13,7 +13,12 @@ interface Props {
   updateTodoTitle: (id: number, title: string) => void;
 }
 
-export const TodoItem: React.FC<Props> = ({ todo, toggleTodo, deleteTodo, updateTodoTitle }) => {
+export const TodoItem: React.FC<Props> = ({
+  todo,
+  toggleTodo,
+  deleteTodo,
+  updateTodoTitle,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(todo.title);
 
@@ -54,6 +59,7 @@ export const TodoItem: React.FC<Props> = ({ todo, toggleTodo, deleteTodo, update
 
   const handleBlur = () => {
     const trimmedTitle = editedTitle.trim();
+
     if (trimmedTitle) {
       updateTodoTitle(todo.id, trimmedTitle);
       setIsEditing(false);
@@ -65,7 +71,8 @@ export const TodoItem: React.FC<Props> = ({ todo, toggleTodo, deleteTodo, update
   return (
     <div
       data-cy="Todo"
-      className={`todo ${todo.completed ? 'completed' : ''} ${isEditing ? 'editing' : ''}`}>
+      className={`todo ${todo.completed ? 'completed' : ''} ${isEditing ? 'editing' : ''}`}
+    >
       <label className="todo__status-label">
         <input
           data-cy="TodoStatus"
@@ -91,7 +98,11 @@ export const TodoItem: React.FC<Props> = ({ todo, toggleTodo, deleteTodo, update
         </form>
       ) : (
         <>
-          <span onDoubleClick={handleDoubleClick} data-cy="TodoTitle" className="todo__title">
+          <span
+            onDoubleClick={handleDoubleClick}
+            data-cy="TodoTitle"
+            className="todo__title"
+          >
             {todo.title}
           </span>
 
