@@ -1,24 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
-
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import cn from 'classnames';
+import { Todo } from './types';
+import { TodoContext } from './contexts/TodoContext';
 
 interface Props {
   todo: Todo;
-  toggleTodo: (id: number) => void;
-  deleteTodo: (id: number) => void;
-  updateTodoTitle: (id: number, title: string) => void;
 }
 
-export const TodoItem: React.FC<Props> = ({
-  todo,
-  toggleTodo,
-  deleteTodo,
-  updateTodoTitle,
-}) => {
+export const TodoItem: React.FC<Props> = ({ todo }) => {
+  const { toggleTodo, deleteTodo, updateTodoTitle } = useContext(TodoContext)!;
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(todo.title);
 
@@ -71,7 +61,7 @@ export const TodoItem: React.FC<Props> = ({
   return (
     <div
       data-cy="Todo"
-      className={`todo ${todo.completed ? 'completed' : ''} ${isEditing ? 'editing' : ''}`}
+      className={cn('todo', { completed: todo.completed, editing: isEditing })}
     >
       <label className="todo__status-label">
         <input
